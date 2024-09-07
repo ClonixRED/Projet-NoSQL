@@ -1,0 +1,29 @@
+docker logs postgres_db // voir les log de postgres_db
+docker volume prune // Supprime tous les volumes associés aux conteneurs,
+docker volume ls // lister les volumes Docker
+docker volume rm projetnosql_pgdata // supprime le volume
+sudo usermod -aG docker $USER // ajouter un user au groupe docker
+sudo systemctl restart docker
+docker system prune -a --volumes // supprimer tous les conteneurs, images et volumes non utilisés 
+
+
+
+
+docker-compose down
+docker-compose up --build -d
+
+
+docker exec -it postgres_db psql -U user -d mydb // se connecter a la db
+
+
+http://localhost:8080
+
+
+
+
+Objectif : 
+
+index.php : se connecter et acceder au site
+connexion.php : s'identifier et acceder à la page principale
+db.php : créer la connection à la base de donnée 
+effectif.php : afficher la liste des effectifs de l'entreprise

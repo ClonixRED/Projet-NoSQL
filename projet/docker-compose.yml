@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  web:
+    image: php:8.2-apache
+    container_name: php_server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./web:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+      - mongo
+
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  pgdata:
+  mongodata:

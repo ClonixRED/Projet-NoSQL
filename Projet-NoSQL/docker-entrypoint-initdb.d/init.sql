@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS commandes (
     produit VARCHAR(100),
     quantite INTEGER,
     date_commande TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    statut VARCHAR(50) DEFAULT 'En cours'
+    statut VARCHAR(50) DEFAULT 'En cours',
+    responsable VARCHAR(100)
 );
-
 
 
 -- Insérer un utilisateur de base dans la table effectif

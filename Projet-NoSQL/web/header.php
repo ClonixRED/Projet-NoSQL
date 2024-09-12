@@ -96,6 +96,7 @@
         <div class="subNavigationBar-content">
             <a href="./addCommande.php">Ajouter une Commande</a>
             <a href="./allCommande.php">Liste des Commande</a>
+            <a href="./assignercommande.php">Assignation des commandes</a>
         </div>
     </div> 
     <a href="./deconnexion.php" class="rightSide active3">Déconnexion</a>

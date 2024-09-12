@@ -22,8 +22,9 @@ if (isset($_GET['toggle_status']) && isset($_GET['commande_id'])) {
     exit();
 }
 
+// Requête pour sélectionner toutes les commandes
 $query = '
-    SELECT c.id AS client_id, c.nom, c.prenom, co.id AS commande_id, co.produit, co.quantite, co.date_commande, co.statut 
+    SELECT c.id AS client_id, c.nom, c.prenom, co.id AS commande_id, co.produit, co.quantite, co.date_commande, co.statut, co.responsable
     FROM clients c
     JOIN commandes co ON c.id = co.client_id
     ORDER BY co.date_commande DESC';
@@ -32,6 +33,18 @@ $result = pg_query($conn, $query);
 
 if (!$result) {
     die("Erreur lors de l'exécution de la requête.");
+}
+
+// Séparer les commandes en fonction de leur statut
+$commandesEnCours = [];
+$commandesFinies = [];
+
+while ($row = pg_fetch_assoc($result)) {
+    if ($row['statut'] === 'En cours') {
+        $commandesEnCours[] = $row;
+    } else {
+        $commandesFinies[] = $row;
+    }
 }
 ?>
 
@@ -88,6 +101,7 @@ if (!$result) {
 
 <h1>Liste des Commandes</h1>
 
+<h2>Commandes en cours</h2>
 <table>
     <thead>
         <tr>
@@ -97,18 +111,17 @@ if (!$result) {
             <th>Quantité</th>
             <th>Date de Commande</th>
             <th>Statut</th>
+            <th>Responsable</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
         <?php
         $rank = 0;
-        while ($row = pg_fetch_assoc($result)) {
+        foreach ($commandesEnCours as $row) {
             $rowClass = ($rank % 2 == 0) ? 'rowPair' : 'rowImpair';
-            $statusClass = ($row['statut'] === 'En cours') ? 'statusEnCours' : 'statusFini';
-
-            
-            $toggleStatusText = ($row['statut'] === 'En cours') ? 'Marquer comme Fini' : 'Revenir à En cours';
+            $statusClass = 'statusEnCours';
+            $toggleStatusText = 'Marquer comme Fini';
 
             echo "<tr class='{$rowClass}'>";
             echo "<td>" . ($rank + 1) . "</td>";
@@ -117,6 +130,47 @@ if (!$result) {
             echo "<td>" . htmlspecialchars($row['quantite']) . "</td>";
             echo "<td>" . date('d/m/Y', strtotime($row['date_commande'])) . "</td>";
             echo "<td><span class='{$statusClass}'>" . htmlspecialchars($row['statut']) . "</span></td>";
+            echo "<td>" . htmlspecialchars($row['responsable'] ?: 'Non assigné') . "</td>";
+            echo "<td>";
+            echo "<a href='allCommande.php?toggle_status=1&commande_id=" . htmlspecialchars($row['commande_id']) . "&current_status=" . htmlspecialchars($row['statut']) . "' class='statusButton " . $statusClass . "'>" . $toggleStatusText . "</a>";
+            echo "</td>";
+            echo "</tr>";
+            $rank++;
+        }
+        ?>
+    </tbody>
+</table>
+
+<h2>Commandes finies</h2>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Client</th>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>Date de Commande</th>
+            <th>Statut</th>
+            <th>Responsable</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $rank = 0;
+        foreach ($commandesFinies as $row) {
+            $rowClass = ($rank % 2 == 0) ? 'rowPair' : 'rowImpair';
+            $statusClass = 'statusFini';
+            $toggleStatusText = 'Revenir à En cours';
+
+            echo "<tr class='{$rowClass}'>";
+            echo "<td>" . ($rank + 1) . "</td>";
+            echo "<td>" . htmlspecialchars($row['prenom']) . " " . htmlspecialchars($row['nom']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['produit']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['quantite']) . "</td>";
+            echo "<td>" . date('d/m/Y', strtotime($row['date_commande'])) . "</td>";
+            echo "<td><span class='{$statusClass}'>" . htmlspecialchars($row['statut']) . "</span></td>";
+            echo "<td>" . htmlspecialchars($row['responsable'] ?: 'Non assigné') . "</td>";
             echo "<td>";
             echo "<a href='allCommande.php?toggle_status=1&commande_id=" . htmlspecialchars($row['commande_id']) . "&current_status=" . htmlspecialchars($row['statut']) . "' class='statusButton " . $statusClass . "'>" . $toggleStatusText . "</a>";
             echo "</td>";

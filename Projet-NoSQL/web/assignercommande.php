@@ -7,6 +7,12 @@ if (!isset($_SESSION["user"])) {
     exit();
 }
 
+if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'effectif') {
+    
+    header("Location: ./index.php");
+    exit();
+}
+
 // Récupérer la liste des effectifs
 $effectifsQuery = "SELECT id, prenom, nom FROM effectif";
 $effectifsResult = pg_query($conn, $effectifsQuery);

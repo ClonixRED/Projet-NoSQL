@@ -7,36 +7,24 @@ if (!isset($_SESSION["user"])) {
     exit();
 }
 
-if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'effectif') {
-   
+if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'clients') {
     header("Location: ./index.php");
     exit();
 }
 
+// Récupérer l'ID du client connecté depuis la session
+$clientId = $_SESSION["user"];
 
-// Mettre à jour le statut de la commande si un changement est demandé
-if (isset($_GET['toggle_status']) && isset($_GET['commande_id'])) {
-    $commande_id = $_GET['commande_id'];
-    $current_status = $_GET['current_status'];
-
-    // Changer le statut en fonction de son état actuel
-    $new_status = ($current_status === 'En cours') ? 'Fini' : 'En cours';
-    $updateQuery = "UPDATE commandes SET statut = $1 WHERE id = $2";
-    pg_query_params($conn, $updateQuery, array($new_status, $commande_id));
-
-    // Rediriger vers la page actuelle pour éviter la soumission du formulaire en rafraîchissant
-    header("Location: allCommande.php");
-    exit();
-}
-
-// Requête pour sélectionner toutes les commandes
+// Requête pour sélectionner les commandes du client connecté
 $query = '
     SELECT c.id AS client_id, c.nom, c.prenom, co.id AS commande_id, co.produit, co.quantite, co.date_commande, co.statut, co.responsable
     FROM clients c
     JOIN commandes co ON c.id = co.client_id
+    WHERE c.id = $1
     ORDER BY co.date_commande DESC';
 
-$result = pg_query($conn, $query);
+// Exécuter la requête avec l'ID du client connecté
+$result = pg_query_params($conn, $query, array($clientId));
 
 if (!$result) {
     die("Erreur lors de l'exécution de la requête.");
@@ -54,6 +42,7 @@ while ($row = pg_fetch_assoc($result)) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -104,9 +93,9 @@ while ($row = pg_fetch_assoc($result)) {
 </head>
 <body>
 
-<?php include 'header.php'; ?>
+<?php include 'headerclient.php'; ?>
 
-<h1>Liste des Commandes</h1>
+<h1>Mes commandes</h1>
 
 <h2>Commandes en cours</h2>
 <table>
@@ -119,7 +108,6 @@ while ($row = pg_fetch_assoc($result)) {
             <th>Date de Commande</th>
             <th>Statut</th>
             <th>Responsable</th>
-            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -138,9 +126,6 @@ while ($row = pg_fetch_assoc($result)) {
             echo "<td>" . date('d/m/Y', strtotime($row['date_commande'])) . "</td>";
             echo "<td><span class='{$statusClass}'>" . htmlspecialchars($row['statut']) . "</span></td>";
             echo "<td>" . htmlspecialchars($row['responsable'] ?: 'Non assigné') . "</td>";
-            echo "<td>";
-            echo "<a href='allCommande.php?toggle_status=1&commande_id=" . htmlspecialchars($row['commande_id']) . "&current_status=" . htmlspecialchars($row['statut']) . "' class='statusButton " . $statusClass . "'>" . $toggleStatusText . "</a>";
-            echo "</td>";
             echo "</tr>";
             $rank++;
         }
@@ -159,7 +144,6 @@ while ($row = pg_fetch_assoc($result)) {
             <th>Date de Commande</th>
             <th>Statut</th>
             <th>Responsable</th>
-            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -178,9 +162,6 @@ while ($row = pg_fetch_assoc($result)) {
             echo "<td>" . date('d/m/Y', strtotime($row['date_commande'])) . "</td>";
             echo "<td><span class='{$statusClass}'>" . htmlspecialchars($row['statut']) . "</span></td>";
             echo "<td>" . htmlspecialchars($row['responsable'] ?: 'Non assigné') . "</td>";
-            echo "<td>";
-            echo "<a href='allCommande.php?toggle_status=1&commande_id=" . htmlspecialchars($row['commande_id']) . "&current_status=" . htmlspecialchars($row['statut']) . "' class='statusButton " . $statusClass . "'>" . $toggleStatusText . "</a>";
-            echo "</td>";
             echo "</tr>";
             $rank++;
         }

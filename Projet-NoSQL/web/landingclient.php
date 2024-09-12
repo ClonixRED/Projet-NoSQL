@@ -9,7 +9,7 @@ if (!isset($_SESSION["user"])) {
 }
 
 
-if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'effectif') {
+if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'clients') {
     
     header("Location: ./index.php");
     exit();
@@ -22,7 +22,7 @@ $userId = $_SESSION["user"];
 $userId = pg_escape_string($conn, $userId);
 
 
-$query = "SELECT * FROM effectif WHERE id = '$userId'";
+$query = "SELECT * FROM clients WHERE id = '$userId'";
 
 
 $result = pg_query($conn, $query);
@@ -75,7 +75,7 @@ if (!$userData) {
         
     </head> 
 
-    <?php include 'header.php'; ?>
+    <?php include 'headerclient.php'; ?>
 
 
     <body>

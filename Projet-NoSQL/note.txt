@@ -13,7 +13,7 @@ docker-compose down
 docker-compose up --build -d
 
 
-docker exec -it postgres_db psql -U user -d mydb // se connecter a la db
+docker exec -it postgres_db psql -U user -d projet-nosql_pgdata // se connecter a la db
 
 
 http://localhost:8080

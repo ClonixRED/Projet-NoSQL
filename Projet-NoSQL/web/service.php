@@ -9,6 +9,12 @@ if (!isset($_SESSION["user"])) {
     exit();
 }
 
+if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'effectif') {
+    
+    header("Location: ./index.php");
+    exit();
+}
+
 $userId = $_SESSION["user"];
 $userId = pg_escape_string($conn, $userId);
 

@@ -1,5 +1,5 @@
 <?php
-$host = 'postgres_db';
+$host = 'db'; // Nom du service PostgreSQL défini dans docker-compose.yml
 $port = '5432';
 $dbname = 'mydb';
 $user = 'user';

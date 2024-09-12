@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS clients (
     nom VARCHAR(50),
     prenom VARCHAR(50),
     mail VARCHAR(100),
+    password VARCHAR(100),
     numero VARCHAR(15),
     adresse VARCHAR(255),
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS commandes (
 INSERT INTO effectif (prenom, nom, numero, mail, password) VALUES
 ('Clonix', 'RED', '0123456789', 'clonix@example.com', 'password');
 
-INSERT INTO clients (prenom, nom, numero, mail, adresse) 
-VALUES ('Jean', 'Dupont', '0123456789', 'jean.dupont@example.com', '123 Rue Exemple, Paris');
+INSERT INTO clients (prenom, nom, numero, mail, adresse, password) 
+VALUES ('Jean', 'Dupont', '0123456789', 'jean.dupont@example.com', '123 Rue Exemple, Paris', 'password');
 
 

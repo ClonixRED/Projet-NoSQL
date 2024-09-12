@@ -8,6 +8,11 @@ if (!isset($_SESSION["user"])) {
     exit();
 }
 
+if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'effectif') {
+    
+    header("Location: ./index.php");
+    exit();
+}
 
 if (!isset($_GET['id'])) {
     die("ID de l'effectif non spécifié.");

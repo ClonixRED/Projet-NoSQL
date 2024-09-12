@@ -9,6 +9,11 @@ if (!isset($_SESSION["user"])) {
     exit();
 }
 
+if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'effectif') {
+    
+    header("Location: ./index.php");
+    exit();
+}
 
 $query = 'SELECT * FROM effectif';
 $result = pg_query($conn, $query);
@@ -102,7 +107,7 @@ if (!$result) {
     <thead>
         <tr>
             <th>#</th>
-            <th>Nom</th>
+            <th>Effectif</th>
             <th>Téléphone</th>
             <th>Email</th>
             <th>Actions</th>

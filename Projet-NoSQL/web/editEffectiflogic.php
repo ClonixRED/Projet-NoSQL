@@ -8,6 +8,11 @@ if (!isset($_SESSION["user"])) {
     exit();
 }
 
+if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'effectif') {
+    
+    header("Location: ./index.php");
+    exit();
+}
 
 if (!isset($_POST['id']) || !isset($_POST['prenom']) || !isset($_POST['nom']) || !isset($_POST['numero']) || !isset($_POST['mail']) || !isset($_POST['password'])) {
     die("Données manquantes.");

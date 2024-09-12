@@ -2,10 +2,19 @@
 session_start(); 
 require_once './db.php';
 
+
 if (!isset($_SESSION["user"])) {
     header("Location: ./index.php");
     exit();
 }
+
+
+if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'effectif') {
+    
+    header("Location: ./index.php");
+    exit();
+}
+
 
 $query = 'SELECT * FROM clients';
 $result = pg_query($conn, $query);

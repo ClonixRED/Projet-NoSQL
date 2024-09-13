@@ -26,51 +26,84 @@ if (!$result) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un Effectif</title>
     <style>
-        body {
-            color: #ffffff;
-            background-color: #292929;
-            margin: 0;
-        }
+    body {
+        color: #ffffff;
+        background-color: #292929;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    .formContainer {
+        width: 90%;
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #1c1c1c;
+    }
+    .textInputStyle, .selectInputStyle {
+        width: calc(100% - 22px);
+        height: 40px;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border: solid 2px black;
+        padding: 0 10px;
+    }
+    .submitButtonStyle {
+        width: 100%;
+        height: 45px;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 10px;
+        border: solid 2px black;
+        background-color: #d90368;
+        color: #ffffff;
+        cursor: pointer;
+    }
+    .submitButtonStyle:hover {
+        background-color: #c70260;
+    }
+    .normalTitleStyle {
+        font-weight: bold;
+        color : #d90368;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
         .formContainer {
-            width: 80%;
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #1c1c1c;
+            width: 95%;
+            padding: 15px;
         }
-        .textInputStyle, .selectInputStyle {
-            width: calc(100% - 22px);
-            height: 40px;
-            text-align: center;
-            font-weight: bold;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border: solid 2px black;
-            padding: 0 10px;
+        .textInputStyle {
+            margin-bottom: 15px;
+            height: 35px;
         }
         .submitButtonStyle {
-            width: 100%;
-            height: 45px;
-            text-align: center;
-            font-weight: bold;
-            border-radius: 10px;
-            border: solid 2px black;
-            background-color: #d90368;
-            color: #ffffff;
-            cursor: pointer;
+            height: 40px;
         }
-        .submitButtonStyle:hover {
-            background-color: #c70260;
+    }
+
+    @media (max-width: 480px) {
+        .formContainer {
+            padding: 10px;
+        }
+        .textInputStyle {
+            margin-bottom: 10px;
+            height: 35px;
+        }
+        .submitButtonStyle {
+            height: 35px;
+            font-size: 14px;
         }
         .normalTitleStyle {
-            font-weight: bold;
-            color : #d90368;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            text-align: center;
+            font-size: 1.2rem;
         }
+    }
     </style>
+
 </head>
 <body>
 

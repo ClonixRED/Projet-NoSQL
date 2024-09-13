@@ -30,52 +30,107 @@ if (!$result) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Clients</title>
-    <style>
-        body {
+        <style>
+            body {
             color: #ffffff;
             background-color: #292929;
             margin: 0;
             text-align: center;
-        }
-        table {
-            width: 100%;
-            margin: 60px auto 20px auto;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: center;
-            border: 2px solid white;
-        }
-        th {
-            background-color: #4d342482;
-        }
-        .rowPair {
-            background-color: #a37150b0;
-        }
-        .rowImpair {
-            background-color: #734d33b0;
-        }
-        .actionButton {
-            border-radius: 5px;
-            padding: 5px 10px;
-            display: inline-block;
-            border: none;
-            color: #ffffff;
-            font-weight: bold;
-            text-align: center;
-            width: 40%; 
-            box-sizing: border-box; 
-            font-size: 16px;
-        }
-        .viewOrdersButton {
-            background-color: #17a2b8;
-        }
-        .viewOrdersButton:hover {
-            background-color: #138496;
-        }
-    </style>
-</head>
+            font-family: Arial, sans-serif;
+            }
+
+            h1 {
+                margin: 20px 0;
+            }
+
+            table {
+                width: 90%;
+                margin: 20px auto;
+                border-collapse: collapse;
+            }
+
+            th, td {
+                padding: 10px;
+                text-align: center;
+                border: 2px solid white;
+            }
+
+            th {
+                background-color: #4d342482;
+            }
+
+            .rowPair {
+                background-color: #a37150b0;
+            }
+
+            .rowImpair {
+                background-color: #734d33b0;
+            }
+
+            .actionButton {
+                border-radius: 5px;
+                padding: 8px 12px;
+                display: inline-block;
+                border: none;
+                color: #ffffff;
+                font-weight: bold;
+                text-align: center;
+                width: 40%; 
+                box-sizing: border-box; 
+                font-size: 16px;
+            }
+
+            .viewOrdersButton {
+                background-color: #17a2b8;
+            }
+
+            .viewOrdersButton:hover {
+                background-color: #138496;
+            }
+
+            /* Rendre la page responsive */
+            @media only screen and (max-width: 768px) {
+                table {
+                    width: 100%;
+                }
+
+                th, td {
+                    padding: 8px;
+                    font-size: 14px;
+                }
+
+                h1 {
+                    font-size: 1.5rem;
+                }
+
+                .actionButton {
+                    width: 90%;
+                    font-size: 14px;
+                    padding: 10px 5px;
+                }
+            }
+
+            @media only screen and (max-width: 480px) {
+                th, td {
+                    padding: 6px;
+                    font-size: 12px;
+                }
+
+                h1 {
+                    font-size: 1.2rem;
+                }
+
+                table {
+                    font-size: 12px;
+                }
+
+                .actionButton {
+                    width: 100%;
+                    font-size: 12px;
+                }
+            }
+        </style>
+    </head>
 <body>
 
 <?php include 'header.php'; ?>

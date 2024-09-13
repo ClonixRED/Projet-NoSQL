@@ -42,9 +42,9 @@ CREATE TABLE IF NOT EXISTS commandes (
 
 -- Insérer un utilisateur de base dans la table effectif
 INSERT INTO effectif (prenom, nom, numero, mail, password) VALUES
-('Clonix', 'RED', '0123456789', 'clonix@example.com', 'password');
+('Clonix', 'RED', '0123456789', 'effectif@clonixcorp.com', 'password');
 
 INSERT INTO clients (prenom, nom, numero, mail, adresse, password) 
-VALUES ('Jean', 'Dupont', '0123456789', 'jean.dupont@example.com', '123 Rue Exemple, Paris', 'password');
+VALUES ('Jean', 'Dupont', '0123456789', 'jean.dupont@client.com', '123 Rue Exemple, Paris', 'password');
 
 

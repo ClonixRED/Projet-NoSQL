@@ -111,7 +111,7 @@
             <img class='profilePictureClass' src='images/logo-hopital-global.png' width='30%' height='30%' style="padding-bottom: 10px;"/>
             <h2>Page de connexion</h2>
             <div class="form-group">
-                <input type="email" name="mail" class="form-control" placeholder="mail" required="required"
+                <input type="email" name="mail" class="form-control" placeholder="Mail" required="required"
                     autocomplete="off">
             </div>
             <div class="form-group">

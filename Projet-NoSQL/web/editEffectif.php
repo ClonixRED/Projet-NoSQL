@@ -103,7 +103,6 @@ if (!$effectifData) {
         <input type="text" name="nom" class="textInputStyle" placeholder="Nom" value="<?php echo htmlspecialchars($effectifData['nom']); ?>" required>
         <input type="text" name="numero" class="textInputStyle" placeholder="Numéro" value="<?php echo htmlspecialchars($effectifData['numero']); ?>" required>
         <input type="email" name="mail" class="textInputStyle" placeholder="Email" value="<?php echo htmlspecialchars($effectifData['mail']); ?>" required>
-        <input type="password" name="password" class="textInputStyle" placeholder="Mot de passe" value="<?php echo htmlspecialchars($effectifData['password']); ?>" required>
         <button type="submit" class="submitButtonStyle">Modifier</button>
     </form>
 </div>

@@ -14,7 +14,7 @@ if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'effectif') {
     exit();
 }
 
-if (!isset($_POST['id']) || !isset($_POST['prenom']) || !isset($_POST['nom']) || !isset($_POST['numero']) || !isset($_POST['mail']) || !isset($_POST['password'])) {
+if (!isset($_POST['id']) || !isset($_POST['prenom']) || !isset($_POST['nom']) || !isset($_POST['numero']) || !isset($_POST['mail']) ) {
     die("Données manquantes.");
 }
 
@@ -23,12 +23,11 @@ $prenom = htmlspecialchars($_POST['prenom']);
 $nom = htmlspecialchars($_POST['nom']);
 $numero = htmlspecialchars($_POST['numero']);
 $mail = htmlspecialchars($_POST['mail']);
-$password = htmlspecialchars($_POST['password']);
 
 
-$query = 'UPDATE effectif SET prenom = $1, nom = $2, numero = $3, mail = $4, password = $5 WHERE id = $6';
+$query = 'UPDATE effectif SET prenom = $1, nom = $2, numero = $3, mail = $4 WHERE id = $5';
 $result = pg_prepare($conn, "update_effectif", $query);
-$result = pg_execute($conn, "update_effectif", array($prenom, $nom, $numero, $mail, $password, $id));
+$result = pg_execute($conn, "update_effectif", array($prenom, $nom, $numero, $mail, $id));
 
 
 if (!$result) {

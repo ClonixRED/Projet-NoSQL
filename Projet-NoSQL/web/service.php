@@ -130,8 +130,10 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
     <style>
         body {
             color: #ffffff;
-            background-color: #292929;
-            margin: 0;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('images/nuage.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
         .formContainer {
             width: 80%;
@@ -177,7 +179,7 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
             text-align: center;
         }
         .ficheRecap {
-            background-color: #3e9d94;
+            background-color: #b2e9e4;
             text-align: center;
             margin: auto;
             padding: 10px 10px 20px 10px;
@@ -202,7 +204,7 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
             width: 90%;
             margin: 0 auto;
             margin-top: 20px;
-            background-color: #1c1c1c;
+            background-color: #6270c9;
             padding: 20px;
             border-radius: 10px;
         }
@@ -245,6 +247,7 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
             display : flex ;
             flex-direction: column;
         }
+
     </style>
     <script>
         setInterval(function() {
@@ -252,7 +255,7 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
         }, 90000);
     </script>
 </head>
-    <body style="width: 100%; text-align: center;">
+    <body style="text-align: center;">
         <?php require './header.php'; ?>
 
         <h1 style="color: #ffffff; margin: 60px 0px 20px 0px;">PRISE DE SERVICE</h1>

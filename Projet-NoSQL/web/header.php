@@ -99,5 +99,12 @@
             <a href="./assignercommande.php">Assignation des commandes</a>
         </div>
     </div> 
+    <div class="subNavigationBar">
+        <button class="subNavigationBarbtn">Gestion&nbsp;▾</button>
+        <div class="subNavigationBar-content">
+            <a href="./changepassword_client.php">Changer le mot de passe d'un Client</a>
+            <a href="./changepassword_effectif.php">Changer le mot de passe d'un Effectif</a>
+        </div>
+    </div> 
     <a href="./deconnexion.php" class="rightSide active3">Déconnexion</a>
 </div>

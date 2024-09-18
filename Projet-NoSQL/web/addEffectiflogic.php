@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $numero = htmlspecialchars($_POST['numero']);
     $mail = htmlspecialchars($_POST['mail']);
     $password = htmlspecialchars($_POST['password']);
-
+    $passwordhashed = password_hash($password, PASSWORD_BCRYPT, ["cost" => 15]);
    
     $query = 'INSERT INTO effectif (nom, prenom, numero, mail, password) VALUES ($1, $2, $3, $4, $5)';
 
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = pg_prepare($conn, "insert_effectif", $query);
 
     
-    $result = pg_execute($conn, "insert_effectif", array($nom, $prenom, $numero, $mail, $password));
+    $result = pg_execute($conn, "insert_effectif", array($nom, $prenom, $numero, $mail, $passwordhashed));
 
     if ($result) {
         

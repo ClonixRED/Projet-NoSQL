@@ -42,7 +42,7 @@ if (!empty($_POST["mail"]) && !empty($_POST["password"])) {
         // Vérification du format de l'email avec filter_var
         if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
             // Vérification du mot de passe
-            if ($password == $data["password"]) {
+            if (password_verify($password, $data["password"])) {   //if ($password == $data["password"]) {
                 // Vérifier que la clé 'id' existe dans le tableau
                 if (isset($data["id"])) {
                     // Stocker la source de l'utilisateur dans la session

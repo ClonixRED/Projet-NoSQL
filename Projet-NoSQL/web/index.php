@@ -41,7 +41,7 @@
         }
 
         .form-control {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -72,7 +72,6 @@
             padding: 12px;
             border: none;
             border-radius: 5px;
-            background-color: #efa676;
             color: #ffffff;
             font-size: 18px;
             font-weight: 700;

@@ -68,13 +68,12 @@ if (!$result) {
             border-radius: 5px;
             padding: 5px 10px;
             margin: 2px 0;
-            display: inline-block;
             border: none;
             color: #ffffff;
             font-weight: bold;
             text-align: center;
             text-decoration: none; 
-            width: 20%; 
+            width: 8rem; 
             box-sizing: border-box; 
             font-size: 16px;
         }
@@ -86,6 +85,7 @@ if (!$result) {
 
         .deleteButtonClass {
             background-color: #dc3545; 
+            margin-left:10px;
         }
 
     </style>

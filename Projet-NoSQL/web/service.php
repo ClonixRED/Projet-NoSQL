@@ -179,10 +179,11 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
         .ficheRecap {
             background-color: #3e9d94;
             text-align: center;
-            margin: 50px 50px 20px 50px;
+            margin: auto;
             padding: 10px 10px 20px 10px;
             border-radius: 10px;
             color: #01161e;
+            width: 500px;
         }
         .ficheRecap h4 {
             padding: 10px;
@@ -198,7 +199,7 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
             font-weight: bold;
         }
         .tableContainer {
-            width: 80%;
+            width: 90%;
             margin: 0 auto;
             margin-top: 20px;
             background-color: #1c1c1c;
@@ -239,6 +240,11 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
         input[name="end_service"]:hover {
             background-color: #c70260;
         }
+
+        .generalContainer {
+            display : flex ;
+            flex-direction: column;
+        }
     </style>
     <script>
         setInterval(function() {
@@ -246,66 +252,68 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
         }, 90000);
     </script>
 </head>
-<body style="width: 100%; text-align: center;">
-    <?php require './header.php'; ?>
+    <body style="width: 100%; text-align: center;">
+        <?php require './header.php'; ?>
 
-    <h1 style="color: #ffffff; margin: 60px 0px 20px 0px;">PRISE DE SERVICE</h1>
-    <div class="formContainer">
-        <?php if ($isInService) { ?>
-            <form method="post" action="">
-                <input type="submit" name="end_service" value="Terminer le service" class="submitButtonStyle2">
-            </form>
-        <?php } else { ?>
-            <form method="post" action="">
-                <input type="submit" name="start_service" value="Prendre le service" class="submitButtonStyle">
-            </form>
-        <?php } ?>
-    </div>
-    
-    <div class="ficheRecap">
-        <h4>Fiche récapitulative</h4>
-        <table>
-            <tr>
-                <td class="titleSummaryStyle">Prénom :</td>
-                <td><?php echo ucfirst($userprenom); ?></td>
-            </tr>
-            <tr>
-                <td class="titleSummaryStyle">Nom :</td>
-                <td><?php echo ucfirst(strtolower($usernom)); ?></td>
-            </tr>
-            <tr>
-                <td class="titleSummaryStyle">Numéro :</td>
-                <td><?php echo $usernumero; ?></td>
-            </tr>
-            <tr>
-                <td class="titleSummaryStyle">Total service :</td>
-                <td><?php echo $totalServiceTimeFormatted; ?></td>
-            </tr>
-        </table>
-    </div>
-    
-    <div class="tableContainer">
-        <h4 style="text-align: center; color: #ffffff;">Liste des employés en service</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Prénom</th>
-                    <th>Nom</th>
-                    <th>Numéro</th>
-                    <th>Début de service</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = pg_fetch_assoc($result2)) { ?>
-                    <tr>
-                        <td><?php echo ucfirst($row['prenom']); ?></td>
-                        <td><?php echo ucfirst(strtolower($row['nom'])); ?></td>
-                        <td><?php echo $row['numero']; ?></td>
-                        <td><?php echo $row['debutdeservice']; ?></td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
-</body>
+        <h1 style="color: #ffffff; margin: 60px 0px 20px 0px;">PRISE DE SERVICE</h1>
+        <div class='generalContainer'>
+                <div class="formContainer">
+                    <?php if ($isInService) { ?>
+                        <form method="post" action="">
+                            <input type="submit" name="end_service" value="Terminer le service" class="submitButtonStyle2">
+                        </form>
+                    <?php } else { ?>
+                        <form method="post" action="">
+                            <input type="submit" name="start_service" value="Prendre le service" class="submitButtonStyle">
+                        </form>
+                    <?php } ?>
+                </div>
+                
+                <div class="ficheRecap">
+                    <h4>Fiche récapitulative</h4>
+                    <table>
+                        <tr>
+                            <td class="titleSummaryStyle">Prénom :</td>
+                            <td><?php echo ucfirst($userprenom); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="titleSummaryStyle">Nom :</td>
+                            <td><?php echo ucfirst(strtolower($usernom)); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="titleSummaryStyle">Numéro :</td>
+                            <td><?php echo $usernumero; ?></td>
+                        </tr>
+                        <tr>
+                            <td class="titleSummaryStyle">Total service :</td>
+                            <td><?php echo $totalServiceTimeFormatted; ?></td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="tableContainer">
+                    <h4 style="text-align: center; color: #ffffff;">Liste des employés en service</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Prénom</th>
+                                <th>Nom</th>
+                                <th>Numéro</th>
+                                <th>Début de service</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = pg_fetch_assoc($result2)) { ?>
+                                <tr>
+                                    <td><?php echo ucfirst($row['prenom']); ?></td>
+                                    <td><?php echo ucfirst(strtolower($row['nom'])); ?></td>
+                                    <td><?php echo $row['numero']; ?></td>
+                                    <td><?php echo $row['debutdeservice']; ?></td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
+        </body>
 </html>

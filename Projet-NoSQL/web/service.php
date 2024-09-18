@@ -296,8 +296,7 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
                     <table>
                         <thead>
                             <tr>
-                                <th>Prénom</th>
-                                <th>Nom</th>
+                                <th>Effectif</th>
                                 <th>Numéro</th>
                                 <th>Début de service</th>
                             </tr>
@@ -305,8 +304,7 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
                         <tbody>
                             <?php while ($row = pg_fetch_assoc($result2)) { ?>
                                 <tr>
-                                    <td><?php echo ucfirst($row['prenom']); ?></td>
-                                    <td><?php echo ucfirst(strtolower($row['nom'])); ?></td>
+                                    <td><?php echo ucfirst($row['prenom']).' '.ucfirst(strtolower($row['nom'])); ?></td>
                                     <td><?php echo $row['numero']; ?></td>
                                     <td><?php echo $row['debutdeservice']; ?></td>
                                 </tr>

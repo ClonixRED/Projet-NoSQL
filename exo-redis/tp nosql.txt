@@ -1,0 +1,15 @@
+docker run -p 6379:6379 --name redis -d redis
+docker exec -it redis redis-cli
+
+SET my_key "Hello Redis!" //  Inscrire une valeur dans une clé
+
+GET my_key // Récupérer la valeur de la clé
+
+DBSIZE // obtenir le nombre de clé utilisées
+
+KEYS * // lister toutes les clés
+
+INCR my_key // si my_key est un int, incrémente de 1
+
+INCRBY my_key 5  // incrémente de 5
+

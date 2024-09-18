@@ -76,6 +76,7 @@
             font-size: 18px;
             font-weight: 700;
             cursor: pointer;
+            background-color: #0c6d98;
             transition: background-color 0.3s ease;
         }
 
@@ -118,7 +119,7 @@
                     required="required" autocomplete="off">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block" style="background-color: #0c6d98 !important">Connexion</button>
+                <button type="submit" class="btn btn-primary btn-block">Connexion</button>
             </div>
         </form>
 

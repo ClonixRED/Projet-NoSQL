@@ -22,6 +22,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Vérifier si le client existe déjà
     $clientQuery = "SELECT id FROM clients WHERE mail = $1";
     $clientResult = pg_query_params($conn, $clientQuery, array($mail));
+
+    // Définir le mot de passe avec le nom + prenom + numéro
+
+    $password = $nom . $prenom . $numero;
+    $passwordhashed = password_hash($password, PASSWORD_BCRYPT, ["cost" => 15]);
     
     if (pg_num_rows($clientResult) > 0) {
         // Client existe, récupérer son ID
@@ -29,8 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $client_id = $client['id'];
     } else {
         // Insérer un nouveau client
-        $insertClientQuery = "INSERT INTO clients (nom, prenom, mail, numero, adresse) VALUES ($1, $2, $3, $4, $5) RETURNING id";
-        $insertClientResult = pg_query_params($conn, $insertClientQuery, array($nom, $prenom, $mail, $numero, $adresse));
+        $insertClientQuery = "INSERT INTO clients (nom, prenom, mail, numero, adresse, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id";
+        $insertClientResult = pg_query_params($conn, $insertClientQuery, array($nom, $prenom, $mail, $numero, $adresse, $passwordhashed));
         
         if ($insertClientResult) {
             $client = pg_fetch_assoc($insertClientResult);
@@ -46,7 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $insertCommandeResult = pg_query_params($conn, $insertCommandeQuery, array($client_id, $produit, $quantite));
         
         if ($insertCommandeResult) {
-            $success = "Commande ajoutée avec succès !";
+            header("Location: allCommande.php");
+            exit();
         } else {
             $error = "Erreur lors de l'ajout de la commande.";
         }
@@ -101,10 +107,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #dc3545;
             margin-bottom: 10px;
         }
-        .success {
-            color: #28a745;
-            margin-bottom: 10px;
-        }
 
         p.notice {
             color: #ffca28;
@@ -124,9 +126,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="error"><?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
-<?php if ($success): ?>
-    <div class="success"><?= htmlspecialchars($success) ?></div>
-<?php endif; ?>
 
 <p class="notice">N'entrez que le mail si le client est existant.</p>
 

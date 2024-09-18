@@ -74,8 +74,7 @@ if (!$result) {
                 border: none;
                 color: #ffffff;
                 font-weight: bold;
-                text-align: center;
-                width: 40%; 
+                text-align: center; 
                 box-sizing: border-box; 
                 font-size: 16px;
             }

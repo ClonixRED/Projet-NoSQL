@@ -130,7 +130,7 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
     <style>
         body {
             color: #ffffff;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('images/nuage.jpg');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('images/nuage.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -258,7 +258,7 @@ $isInService = pg_num_rows($checkServiceResult) > 0;
     <body style="text-align: center;">
         <?php require './header.php'; ?>
 
-        <h1 style="color: #ffffff; margin: 60px 0px 20px 0px;">PRISE DE SERVICE</h1>
+        <h1 style="color: #ffffff; margin: 60px 0px 20px 0px; font-size: 4rem;">PRISE DE SERVICE</h1>
         <div class='generalContainer'>
                 <div class="formContainer">
                     <?php if ($isInService) { ?>

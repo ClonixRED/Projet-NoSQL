@@ -1,44 +1,87 @@
 <?php
 session_start();
-require_once './db.php';
+require_once './db.php'; // Connexion PostgreSQL
+require_once 'vendor/autoload.php'; // Charger MongoDB via Composer
 
-if (!isset($_SESSION["user"])) {
-    header("Location: ./index.php");
-    exit();
-}
+use MongoDB\Client;
 
+// Vérifier si l'utilisateur est connecté et autorisé
 if (!isset($_SESSION["user"]) || $_SESSION["source"] !== 'effectif') {
-    
     header("Location: ./index.php");
     exit();
 }
+
+// Connexion à MongoDB
+$mongoClient = new Client("mongodb://mongo_db:27017"); // Assurez-vous que le conteneur MongoDB s'appelle "mongo_db"
+$logsCollection = $mongoClient->mydb->commande_logs;
 
 // Récupérer la liste des effectifs
 $effectifsQuery = "SELECT id, prenom, nom FROM effectif";
 $effectifsResult = pg_query($conn, $effectifsQuery);
 
-// Récupérer la liste des commandes
-$commandesQuery = "SELECT id, produit, quantite FROM commandes";
+// Récupérer la liste des commandes avec détails
+$commandesQuery = "SELECT commandes.id, commandes.produit, commandes.quantite, clients.nom AS client_nom, clients.prenom AS client_prenom, commandes.responsable 
+                   FROM commandes 
+                   JOIN clients ON commandes.client_id = clients.id";
 $commandesResult = pg_query($conn, $commandesQuery);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $commandeId = $_POST['commande_id'];
     $effectifId = $_POST['effectif_id'];
 
+  // Récupérer l'ancien responsable
+$oldResponsableQuery = "SELECT responsable FROM commandes WHERE id = $1";
+$oldResponsableResult = pg_query_params($conn, $oldResponsableQuery, array($commandeId));
+
+// Si la requête ne retourne aucune ligne ou que la colonne 'responsable' est NULL, on assigne "Non assigné"
+$oldResponsable = pg_fetch_result($oldResponsableResult, 0, 'responsable');
+
+// Vérifier si l'ancien responsable est NULL ou vide et assigner "Non assigné"
+if (empty($oldResponsable)) {
+    $oldResponsable = "Non assigné";
+}
+
+
     // Récupérer le nom complet de l'effectif sélectionné
     $effectifQuery = "SELECT prenom, nom FROM effectif WHERE id = $1";
     $effectifResult = pg_query_params($conn, $effectifQuery, array($effectifId));
     $effectif = pg_fetch_assoc($effectifResult);
-    $responsable = $effectif['prenom'] . ' ' . $effectif['nom'];
+    $newResponsable = $effectif['prenom'] . ' ' . $effectif['nom'];
 
-    // Mettre à jour la commande avec le responsable
+    // Récupérer les détails de la commande (produit, quantité, client)
+    $commandeDetailsQuery = "SELECT commandes.produit, commandes.quantite, clients.prenom AS client_prenom, clients.nom AS client_nom 
+                             FROM commandes 
+                             JOIN clients ON commandes.client_id = clients.id 
+                             WHERE commandes.id = $1";
+    $commandeDetailsResult = pg_query_params($conn, $commandeDetailsQuery, array($commandeId));
+    $commandeDetails = pg_fetch_assoc($commandeDetailsResult);
+    
+    $produit = $commandeDetails['produit'];
+    $quantite = $commandeDetails['quantite'];
+    $client = $commandeDetails['client_prenom'] . ' ' . $commandeDetails['client_nom'];
+
+    // Mettre à jour la commande avec le nouveau responsable
     $assignQuery = "UPDATE commandes SET responsable = $1 WHERE id = $2";
-    pg_query_params($conn, $assignQuery, array($responsable, $commandeId));
+    pg_query_params($conn, $assignQuery, array($newResponsable, $commandeId));
 
+    // Insérer le changement de responsable dans MongoDB
+    $log = [
+        'commande_id' => $commandeId,
+        'produit' => $produit,
+        'quantite' => $quantite,
+        'client' => $client,
+        'ancien_responsable' => $oldResponsable,
+        'nouveau_responsable' => $newResponsable,
+        'date_changement' => new MongoDB\BSON\UTCDateTime()
+    ];
+    $logsCollection->insertOne($log);
+
+    // Rediriger après le changement
     header("Location: allCommande.php");
     exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -74,6 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-color: #734d33b0;
             color: white;
             font-size: 16px;
+            text-align: center;
         }
         button {
             cursor: pointer;

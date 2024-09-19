@@ -97,6 +97,7 @@
             <a href="./addCommande.php">Ajouter une Commande</a>
             <a href="./allCommande.php">Liste des Commande</a>
             <a href="./assignercommande.php">Assignation des commandes</a>
+            <a href="./logresponsable.php">Logs des assignations</a>
         </div>
     </div> 
     <div class="subNavigationBar">

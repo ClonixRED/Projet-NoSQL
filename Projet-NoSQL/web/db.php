@@ -12,4 +12,8 @@ if (!$conn) {
 } else {
     // echo "Connexion réussie à la base de données PostgreSQL.";
 }
-?>
+
+
+
+
+
